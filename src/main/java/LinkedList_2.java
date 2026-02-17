@@ -1,5 +1,6 @@
-public class LinkedListUtils {
+public class LinkedList_2 {
 
+    // 1-8; sumLists; Time: O(n), Space: O(n)
     public static LinkedList sumLists(LinkedList list1, LinkedList list2) {
         if (list1.count() != list2.count()) {
             return null;

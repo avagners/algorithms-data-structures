@@ -29,6 +29,7 @@ public class LinkedList
         return null;
     }
 
+    // 1-4; findAll; Time: O(n), Space: O(k)
     public ArrayList<Node> findAll(int _value) {
         ArrayList<Node> nodes = new ArrayList<Node>();
         Node node = this.head;
@@ -41,6 +42,7 @@ public class LinkedList
         return nodes;
      }
 
+     // 1-1; remove; Time: O(n), Space: O(1)
      public boolean remove(int _value)
      {
        if (this.head == null) {
@@ -72,6 +74,7 @@ public class LinkedList
        return false;
      }
 
+     // 1-2; removeAll; Time: O(n), Space: O(1)
      public void removeAll(int _value)
      {
         while (this.head != null && this.head.value == _value) {
@@ -95,12 +98,14 @@ public class LinkedList
        this.tail = currentNode;
      }
 
+     // 1-3; clear; Time: O(1), Space: O(1)
      public void clear()
      {
        this.head = null;
        this.tail = null;
      }
 
+     // 1-5; count; Time: O(n), Space: O(1)
      public int count()
      {
        int count = 0;
@@ -112,6 +117,7 @@ public class LinkedList
        return count;
      }
 
+     // 1-6; insertAfter; Time: O(1), Space: O(1)
      public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
      {
        if (_nodeAfter == null) {

@@ -1,14 +1,14 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LinkedListUtilsTest {
+public class LinkedList_2Test {
 
     @Test
     public void testSumListsEmptyLists() {
         LinkedList list1 = new LinkedList();
         LinkedList list2 = new LinkedList();
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(0, result.count());
@@ -24,7 +24,7 @@ public class LinkedListUtilsTest {
         list1.addInTail(new Node(5));
         list2.addInTail(new Node(3));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(1, result.count());
@@ -45,7 +45,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(new Node(5));
         list2.addInTail(new Node(6));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(3, result.count());
@@ -66,7 +66,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(new Node(5));
         list2.addInTail(new Node(6));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNull(result);
     }
@@ -84,7 +84,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(new Node(2));
         list2.addInTail(new Node(-3));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(3, result.count());
@@ -106,7 +106,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(new Node(10));
         list2.addInTail(new Node(15));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(3, result.count());
@@ -131,7 +131,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(node3);
         list2.addInTail(node4);
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(2, list1.count());
@@ -153,7 +153,7 @@ public class LinkedListUtilsTest {
         list2.addInTail(new Node(3000000));
         list2.addInTail(new Node(4000000));
 
-        LinkedList result = LinkedListUtils.sumLists(list1, list2);
+        LinkedList result = LinkedList_2.sumLists(list1, list2);
 
         assertNotNull(result);
         assertEquals(2, result.count());
