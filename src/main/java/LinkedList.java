@@ -29,41 +29,107 @@ public class LinkedList
         return null;
     }
 
-    // public ArrayList<Node> findAll(int _value) {
-    //     ArrayList<Node> nodes = new ArrayList<Node>();
-    //     // здесь будет ваш код поиска всех узлов 
-    //     return nodes;
-    //  }
+    public ArrayList<Node> findAll(int _value) {
+        ArrayList<Node> nodes = new ArrayList<Node>();
+        Node node = this.head;
+        while (node != null) {
+            if (node.value == _value) {
+                nodes.add(node);
+            }
+            node = node.next;
+        }
+        return nodes;
+     }
 
      public boolean remove(int _value)
      {
-       // здесь будет ваш код удаления одного узла по заданному значению
-       return true; // если узел был удалён
+       if (this.head == null) {
+           return false;
+       }
+       
+       if (this.head.value == _value) {
+           this.head = this.head.next;
+           if (this.head == null) {
+               this.tail = null;
+           }
+           return true;
+       }
+
+       Node currentNode = this.head;
+       while (currentNode.next != null) {
+           if (currentNode.next.value == _value) {
+               Node nodeToRemove = currentNode.next;
+               currentNode.next = nodeToRemove.next;
+
+               if (nodeToRemove == this.tail) {
+                   this.tail = currentNode;
+               }
+               
+               return true;
+           }
+           currentNode = currentNode.next;
+       }
+       return false;
      }
 
-    //  public void removeAll(int _value)
-    //  {
-    //   // здесь будет ваш код удаления всех узлов по заданному значению
-    //  }
+     public void removeAll(int _value)
+     {
+        while (this.head != null && this.head.value == _value) {
+           this.head = this.head.next;
+       }
 
-    //  public void clear()
-    //  {
-    //   // здесь будет ваш код очистки всего списка
-    //  }
+       if (this.head == null) {
+           this.tail = null;
+           return;
+       }
 
-    //  public int count()
-    //  {
-    //    return 0; // здесь будет ваш код подсчёта количества элементов в списке
-    //  }
+       Node currentNode = this.head;
+       while (currentNode.next != null) {
+           if (currentNode.next.value == _value) {
+               currentNode.next = currentNode.next.next;
+           } else {
+               currentNode = currentNode.next;
+           }
+       }
 
-    //  public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
-    //  {
-    //    // здесь будет ваш код вставки узла после заданного
+       this.tail = currentNode;
+     }
 
-    //    // если _nodeAfter = null , 
-    //    // добавьте новый элемент первым в списке      
-    //  }
+     public void clear()
+     {
+       this.head = null;
+       this.tail = null;
+     }
 
+     public int count()
+     {
+       int count = 0;
+       Node node = this.head;
+       while (node != null) {
+           count++;
+           node = node.next;
+       }
+       return count;
+     }
+
+     public void insertAfter(Node _nodeAfter, Node _nodeToInsert)
+     {
+       if (_nodeAfter == null) {
+           _nodeToInsert.next = this.head;
+           this.head = _nodeToInsert;
+           if (this.tail == null) {
+               this.tail = _nodeToInsert;
+           }
+           return;
+       }
+
+       _nodeToInsert.next = _nodeAfter.next;
+       _nodeAfter.next = _nodeToInsert;
+
+       if (_nodeAfter == this.tail) {
+           this.tail = _nodeToInsert;
+       }
+     }
 }
 
 class Node
