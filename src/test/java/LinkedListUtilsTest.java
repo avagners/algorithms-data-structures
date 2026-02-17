@@ -161,3 +161,4 @@ public class LinkedListUtilsTest {
         assertEquals(6000000, result.tail.value);
     }
 }
+

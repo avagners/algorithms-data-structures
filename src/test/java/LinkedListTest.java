@@ -922,3 +922,4 @@ public class LinkedListTest {
         assertEquals(newNode2, list.tail);
     }
 }
+
