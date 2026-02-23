@@ -1148,3 +1148,4 @@ public class LinkedList2Test {
         assertNull(newNode2.next);
     }
 }
+

@@ -429,3 +429,4 @@ public class LinkedList2_DummyTest {
         assertTrue(node3.next instanceof DummyNode);
     }
 }
+

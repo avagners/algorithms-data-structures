@@ -837,3 +837,4 @@ public class LinkedList2_2Test {
         assertNull(current);
     }
 }
+
