@@ -36,7 +36,7 @@ public class OrderedList<T>
     public int compare(T v1, T v2)
     {
         int result;
-        
+
         if (v1 instanceof Number && v2 instanceof Number) {
             double n1 = ((Number) v1).doubleValue();
             double n2 = ((Number) v2).doubleValue();
@@ -53,7 +53,7 @@ public class OrderedList<T>
         else {
             throw new ClassCastException("Неподдерживаемый тип для сравнения");
         }
-        
+
         return _ascending ? result : -result;
         // -1 если v1 < v2
         // 0 если v1 == v2
@@ -64,30 +64,29 @@ public class OrderedList<T>
     public void add(T value)
     {
         Node<T> newNode = new Node<>(value);
-        
+
         // Если список пуст
         if (head == null) {
             head = newNode;
             tail = newNode;
             return;
         }
-        
+
         if (compare(value, head.value) <= 0) {
             newNode.next = head;
             head.prev = newNode;
             head = newNode;
             return;
         }
-        
+
         if (compare(value, tail.value) >= 0) {
             tail.next = newNode;
             newNode.prev = tail;
             tail = newNode;
             return;
         }
-        
-        Node<T> current = head.next;
-        while (current != null) {
+
+        for (Node<T> current = head.next; current != null; current = current.next) {
             if (compare(value, current.value) <= 0) {
                 // Вставляем перед current
                 newNode.prev = current.prev;
@@ -96,41 +95,36 @@ public class OrderedList<T>
                 current.prev = newNode;
                 return;
             }
-            current = current.next;
         }
     }
 
-	// 7-6; find; Time: O(n), Space: O(1)
+    // 7-6; find; Time: O(n), Space: O(1)
     public Node<T> find(T val)
     {
-        Node<T> current = head;
-        while (current != null) {
+        for (Node<T> current = head; current != null; current = current.next) {
             int cmp = compare(current.value, val);
-            
+
             if (cmp == 0) {
                 // Нашли искомый элемент
                 return current;
             }
-            
+
             // Раннее прерывание: если текущий элемент больше искомого,
             // дальше искать нет смысла (список упорядочен)
             if (cmp > 0) {
                 return null;
             }
-            
-            current = current.next;
         }
         return null;
     }
 
-	// 7-4; delete; Time: O(n), Space: O(1)
+    // 7-4; delete; Time: O(n), Space: O(1)
     public void delete(T val)
-        {
-        Node<T> current = head;
-        while (current != null) {
+    {
+        for (Node<T> current = head; current != null; current = current.next) {
             if (compare(current.value, val) == 0) {
                 // Нашли элемент для удаления
-                
+
                 // Обновляем prev.next
                 if (current.prev != null) {
                     current.prev.next = current.next;
@@ -146,14 +140,13 @@ public class OrderedList<T>
                     // Удаляем tail
                     tail = current.prev;
                 }
-                
+
                 // Очищаем ссылки удаляемого узла
                 current.next = null;
                 current.prev = null;
-                
+
                 return; // Удаляем только первый найденный элемент
             }
-            current = current.next;
         }
     }
 
@@ -167,23 +160,17 @@ public class OrderedList<T>
     public int count()
     {
         int count = 0;
-        Node<T> current = head;
-        while (current != null)
-        {
+        for (Node<T> current = head; current != null; current = current.next) {
             count++;
-            current = current.next;
         }
         return count;
     }
 
     public ArrayList<Node<T>> getAll()
     {
-        ArrayList<Node<T>> r = new ArrayList<Node<T>>();
-        Node<T> node = head;
-        while (node != null)
-        {
+        ArrayList<Node<T>> r = new ArrayList<>();
+        for (Node<T> node = head; node != null; node = node.next) {
             r.add(node);
-            node = node.next;
         }
         return r;
     }
@@ -195,8 +182,7 @@ public class OrderedList<T>
             return;
         }
 
-        Node<T> current = head;
-        while (current != null && current.next != null) {
+        for (Node<T> current = head; current != null && current.next != null; ) {
             if (compare(current.value, current.next.value) == 0) {
                 Node<T> duplicate = current.next;
                 current.next = duplicate.next;
