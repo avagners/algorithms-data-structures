@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class PowerSet
 {
     private static final int TABLE_SIZE = 20000;
@@ -72,9 +75,37 @@ public class PowerSet
         if (index >= 0 && slots[index] != null && slots[index].equals(value)) {
             slots[index] = null;
             size--;
+            
+            // Перекомпактируем таблицу: перераспределяем все элементы после удалённого
+            rehashFrom(index);
+            
             return true;
         }
         return false;
+    }
+
+    // Перекомпактировка таблицы после удаления
+    private void rehashFrom(int startIndex)
+    {
+        // Собираем все элементы после удалённого
+        List<String> elementsToRehash = new ArrayList<>();
+        int index = (startIndex + STEP) % TABLE_SIZE;
+        
+        while (index != startIndex && slots[index] != null) {
+            elementsToRehash.add(slots[index]);
+            slots[index] = null;
+            size--;
+            index = (index + STEP) % TABLE_SIZE;
+        }
+        
+        // Перераспределяем элементы
+        for (String value : elementsToRehash) {
+            int newIndex = seekSlot(value);
+            if (newIndex >= 0) {
+                slots[newIndex] = value;
+                size++;
+            }
+        }
     }
 
     // 10-2; getAll; Time: O(n), Space: O(n)

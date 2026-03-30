@@ -3,6 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PowerSetTest {
 
+    // ==================== Тесты для put() ====================
+
     @Test
     public void testPut_newElement_added() {
         PowerSet set = new PowerSet();
@@ -39,6 +41,8 @@ public class PowerSetTest {
         assertTrue(set.get("c"));
     }
 
+    // ==================== Тесты для get() ====================
+
     @Test
     public void testGet_existingElement() {
         PowerSet set = new PowerSet();
@@ -62,6 +66,8 @@ public class PowerSetTest {
         assertFalse(set.get("anything"));
     }
 
+    // ==================== Тесты для remove() ====================
+
     @Test
     public void testRemove_existingElement() {
         PowerSet set = new PowerSet();
@@ -84,9 +90,97 @@ public class PowerSetTest {
     @Test
     public void testRemove_emptySet() {
         PowerSet set = new PowerSet();
-        
+
         assertFalse(set.remove("anything"));
     }
+
+    @Test
+    public void testRemove_withCollisions() {
+        // Тест для проверки корректности удаления с перекомпактировкой
+        PowerSet set = new PowerSet();
+        
+        // Добавляем элементы, которые будут коллизировать
+        set.put("A");
+        set.put("AA");
+        set.put("AAA");
+        set.put("B");
+        set.put("BB");
+        
+        int sizeBeforeRemove = set.size();
+        
+        // Удаляем первый элемент
+        assertTrue(set.remove("A"));
+        assertEquals(sizeBeforeRemove - 1, set.size());
+        
+        // Проверяем, что остальные элементы доступны
+        assertTrue(set.get("AA"), "AA должен быть доступен после удаления A");
+        assertTrue(set.get("AAA"), "AAA должен быть доступен после удаления A");
+        assertTrue(set.get("B"), "B должен быть доступен после удаления A");
+        assertTrue(set.get("BB"), "BB должен быть доступен после удаления A");
+        
+        // Удаляем средний элемент
+        assertTrue(set.remove("AA"));
+        
+        // Проверяем, что остальные элементы доступны
+        assertTrue(set.get("AAA"));
+        assertTrue(set.get("B"));
+        assertTrue(set.get("BB"));
+        assertFalse(set.get("AA"));
+    }
+
+    @Test
+    public void testRemove_allElementsWithCollisions() {
+        PowerSet set = new PowerSet();
+        
+        // Добавляем много элементов для создания коллизий
+        for (int i = 0; i < 100; i++) {
+            set.put("key" + i);
+        }
+        
+        assertEquals(100, set.size());
+        
+        // Удаляем каждый второй элемент
+        for (int i = 0; i < 100; i += 2) {
+            assertTrue(set.remove("key" + i), "key" + i + " должен удалиться");
+        }
+        
+        assertEquals(50, set.size());
+        
+        // Проверяем, что оставшиеся элементы доступны
+        for (int i = 1; i < 100; i += 2) {
+            assertTrue(set.get("key" + i), "key" + i + " должен быть доступен");
+        }
+        
+        // Проверяем, что удалённые элементы не доступны
+        for (int i = 0; i < 100; i += 2) {
+            assertFalse(set.get("key" + i), "key" + i + " не должен быть доступен");
+        }
+    }
+
+    @Test
+    public void testRemove_thenAddAgain() {
+        PowerSet set = new PowerSet();
+        
+        set.put("A");
+        set.put("B");
+        set.put("C");
+        
+        // Удаляем
+        assertTrue(set.remove("B"));
+        assertEquals(2, set.size());
+        
+        // Добавляем снова
+        set.put("B");
+        assertEquals(3, set.size());
+        assertTrue(set.get("B"));
+        
+        // Проверяем все элементы
+        assertTrue(set.get("A"));
+        assertTrue(set.get("B"));
+        assertTrue(set.get("C"));
+    }
+
+    // ==================== Тесты для intersection() ====================
 
     @Test
     public void testIntersection_nonEmpty() {
@@ -154,6 +248,8 @@ public class PowerSetTest {
         assertTrue(result.get("b"));
     }
 
+    // ==================== Тесты для union() ====================
+
     @Test
     public void testUnion_nonEmpty() {
         PowerSet set1 = new PowerSet();
@@ -196,6 +292,8 @@ public class PowerSetTest {
         
         assertEquals(0, result.size());
     }
+
+    // ==================== Тесты для difference() ====================
 
     @Test
     public void testDifference_nonEmpty() {
@@ -245,6 +343,8 @@ public class PowerSetTest {
         assertTrue(result.get("a"));
         assertTrue(result.get("b"));
     }
+
+    // ==================== Тесты для isSubset() ====================
 
     @Test
     public void testIsSubset_allElementsInCurrent() {
@@ -312,6 +412,8 @@ public class PowerSetTest {
         assertTrue(set2.isSubset(set1));
     }
 
+    // ==================== Тесты для equals() ====================
+
     @Test
     public void testEquals_sameElements() {
         PowerSet set1 = new PowerSet();
@@ -359,6 +461,8 @@ public class PowerSetTest {
         
         assertTrue(set1.equals(set2));
     }
+
+    // ==================== Тесты для быстродействия ====================
 
     @Test
     public void testPerformance_largeSets() {
@@ -428,6 +532,8 @@ public class PowerSetTest {
         assertTrue(searchTime < 5000, "Search should complete in reasonable time");
     }
 
+    // ==================== Тест для комплексного сценария ====================
+
     @Test
     public void testPowerSet_fullWorkflow() {
         PowerSet set1 = new PowerSet();
@@ -484,6 +590,8 @@ public class PowerSetTest {
         assertEquals(2, set1.size());
         assertFalse(set1.get("apple"));
     }
+
+    // ==================== Тесты для cartesianProduct() ====================
 
     @Test
     public void testCartesianProduct_basic() {
@@ -609,4 +717,3 @@ public class PowerSetTest {
         assertTrue(result.get("(a99; b99)"));
     }
 }
-
